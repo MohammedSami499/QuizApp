@@ -6,13 +6,13 @@ public class QuizListModel {
 
     @DocumentId
     private String quiz_id;
-    private long questions;
+    private int questions;
     private String name , image, desc, level, visibility;
 
     public QuizListModel() {
     }
 
-    public QuizListModel(String quiz_id, long questions, String name, String image, String desc, String level, String visibility) {
+    public QuizListModel(String quiz_id, int questions, String name, String image, String desc, String level, String visibility) {
         this.quiz_id = quiz_id;
         this.questions = questions;
         this.name = name;
@@ -34,7 +34,7 @@ public class QuizListModel {
         return questions;
     }
 
-    public void setQuestions(long questions) {
+    public void setQuestions(int questions) {
         this.questions = questions;
     }
 

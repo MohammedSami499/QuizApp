@@ -7,11 +7,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,13 +23,18 @@ import com.example.quizapp.model.QuizListModel;
 
 import java.util.List;
 
-public class DetailsFragment extends Fragment {
+public class DetailsFragment extends Fragment implements View.OnClickListener {
 
-    private static final String TAG = "ResultsFragment";
-    ImageView details_img;
-    TextView details_title, details_dif, details_desc,details_questions;
-    QuizViewModel quizViewModel;
-    int position;
+    private static final String TAG = "DetailsFragment";
+    private ImageView details_img;
+    private TextView details_title, details_dif, details_desc, details_total_questions;
+    private QuizViewModel quizViewModel;
+    private int position;
+    private String quiz_Id;
+    private int allQuestionsNumber;
+
+    private Button detailsButton;
+    private NavController navController;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -47,10 +54,11 @@ public class DetailsFragment extends Fragment {
         details_title = view.findViewById(R.id.details_title);
         details_desc = view.findViewById(R.id.details_desc);
         details_dif = view.findViewById(R.id.details_difficulty);
-        details_questions = view.findViewById(R.id.details_questions);
-
+        details_total_questions = view.findViewById(R.id.details_questions);
+        detailsButton = view.findViewById(R.id.details_start_btn);
+        navController = Navigation.findNavController(view);
         position = DetailsFragmentArgs.fromBundle(getArguments()).getPosition();
-        Log.d(TAG, "sami onViewCreated: "+ position);
+
     }
 
     @Override
@@ -61,11 +69,12 @@ public class DetailsFragment extends Fragment {
         quizViewModel.getMutableLiveData().observe(getViewLifecycleOwner(), new Observer<List<QuizListModel>>() {
             @Override
             public void onChanged(List<QuizListModel> quizListModelList) {
+
+
                 details_title.setText(quizListModelList.get(position).getName());
                 details_desc.setText(quizListModelList.get(position).getDesc());
                 details_dif.setText(quizListModelList.get(position).getLevel());
-                details_questions.setText(String.valueOf(quizListModelList.get(position).getQuestions()));
-
+                details_total_questions.setText(String.valueOf(quizListModelList.get(position).getQuestions()));
                 String imageUrl = quizListModelList.get(position).getImage();
                 Glide
                         .with(getActivity())
@@ -73,8 +82,22 @@ public class DetailsFragment extends Fragment {
                         .centerCrop()
                         .placeholder(R.drawable.placeholder_image)
                         .into(details_img);
+                quiz_Id= quizListModelList.get(position).getQuiz_id();
+                allQuestionsNumber = (int)quizListModelList.get(position).getQuestions();
             }
+
         });
+        detailsButton.setOnClickListener(this);
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+            DetailsFragmentDirections.ActionDetailsFragmentToQuizFragment action = DetailsFragmentDirections.actionDetailsFragmentToQuizFragment();
+            action.setAllQuestionsNumber(allQuestionsNumber);
+            action.setQuizId(quiz_Id);
+            navController.navigate(action);
 
     }
 }
