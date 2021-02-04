@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/resultProgressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -38,17 +38,17 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/resultPercentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="12dp"
         android:text="100%"
         android:textColor="@color/colorPrimary"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/progressBar"
-        app:layout_constraintEnd_toEndOf="@+id/progressBar"
-        app:layout_constraintStart_toStartOf="@+id/progressBar"
-        app:layout_constraintTop_toTopOf="@+id/progressBar" />
+        app:layout_constraintBottom_toBottomOf="@+id/resultProgressBar"
+        app:layout_constraintEnd_toEndOf="@+id/resultProgressBar"
+        app:layout_constraintStart_toStartOf="@+id/resultProgressBar"
+        app:layout_constraintTop_toTopOf="@+id/resultProgressBar" />
 
     <TextView
         android:id="@+id/correct_answers"
@@ -60,7 +60,7 @@
         android:textColor="@color/colorLightText"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        app:layout_constraintTop_toBottomOf="@+id/resultProgressBar" />
     <TextView
         android:id="@+id/wrong_answers"
         android:layout_width="wrap_content"
@@ -85,7 +85,7 @@
         app:layout_constraintTop_toBottomOf="@+id/wrong_answers" />
 
     <TextView
-        android:id="@+id/correct_answers_txt"
+        android:id="@+id/correct_answers_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
@@ -96,7 +96,7 @@
         app:layout_constraintTop_toTopOf="@+id/correct_answers" />
 
     <TextView
-        android:id="@+id/wrong_answers_txt"
+        android:id="@+id/wrong_answers_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="38dp"
@@ -105,10 +105,10 @@
         android:textColor="@color/colorLightText"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/correct_answers_txt" />
+        app:layout_constraintTop_toTopOf="@+id/correct_answers_result" />
 
     <TextView
-        android:id="@+id/question_missed_txt"
+        android:id="@+id/question_missed_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="38dp"
@@ -117,10 +117,10 @@
         android:textColor="@color/colorLightText"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/wrong_answers_txt" />
+        app:layout_constraintTop_toTopOf="@+id/wrong_answers_result" />
 
     <Button
-        android:id="@+id/details_start_btn"
+        android:id="@+id/details_to_home_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"

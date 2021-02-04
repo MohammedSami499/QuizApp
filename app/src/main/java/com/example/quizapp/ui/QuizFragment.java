@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -57,6 +59,14 @@ import java.util.List;
         private CountDownTimer countDownTimer;
         private boolean enableToAnswer = false;
         private int questionNum =0;
+        private int correctAnswer = 0;
+        private int wrongAnswer = 0;
+        private int currentQuestion =0;
+        private int totalAnsweredQuestions = 0;
+        private int missedQuestions= 0;
+
+        private NavController navController;
+        private int questionCounter = 1;
 
         public QuizFragment() {
             // Required empty public constructor
@@ -86,6 +96,8 @@ import java.util.List;
         option_3_BTN = view.findViewById(R.id.third_option);
         nextQuestionBTN = view.findViewById(R.id.nextQuestion_btn);
         quizQuestionsTimeToAnswer = view.findViewById(R.id.question_time_to_answer);
+        //getting the navController
+        navController = Navigation.findNavController(view);
 
         //Getting the passed args
         document_Id = QuizFragmentArgs.fromBundle(getArguments()).getQuizId();
@@ -109,40 +121,32 @@ import java.util.List;
                         }
                     }
                 });
+
         //create onClick listener 
         option_1_BTN.setOnClickListener(this);
         option_2_BTN.setOnClickListener(this);
         option_3_BTN.setOnClickListener(this);
 
+        nextQuestionBTN.setOnClickListener(this);
+
 
     }
 
         private void LoadUI() {
+
+            //Make the option buttons enable
             EnableOptionBTNs();
 
-            //set the basic TVs
+            //Make the basic TVs visible
             quizQuestionsTV.setVisibility(View.VISIBLE);
             quizQuestionCounter.setVisibility(View.VISIBLE);
             quizQuestionCounter.setText("1");
 
             //Load a question to the option button
-            LoadQuestion(1);
+            LoadQuestion(currentQuestion);
         }
 
-        private void LoadQuestion(int questionNumber) {
 
-            //Load options
-            option_1_BTN.setText(aQuestionToAnswer.get(questionNumber).getOption_a());
-            option_2_BTN.setText(aQuestionToAnswer.get(questionNumber).getOption_b());
-            option_3_BTN.setText(aQuestionToAnswer.get(questionNumber).getOption_c());
-
-            //Load question text
-            quizFetchingDataTV.setText(aQuestionToAnswer.get(questionNumber).getQuestion());
-
-            //start question timer
-            startTimer(questionNumber);
-            questionNum = questionNumber ;
-        }
 
         private void startTimer(int questionNumber) {
             //enable progressBar
@@ -163,7 +167,11 @@ import java.util.List;
                 }
                 @Override
                 public void onFinish() {
+                    missedQuestions ++;
                     enableToAnswer = false;
+                    totalAnsweredQuestions ++;
+                    answerResult("Not Answered ! " + "\n the correct is: " + aQuestionToAnswer.get(questionNum).getAnswer());
+                    quizVerifiedAnswerTV.setTextColor(getResources().getColor(R.color.colorAccent , null));
                 }
             };
            countDownTimer.start();
@@ -219,18 +227,91 @@ import java.util.List;
                 case R.id.third_option:
                     checkTheAnswer(option_3_BTN.getText(), v);
                     break;
+                case R.id.nextQuestion_btn:
+                        quizQuestionCounter.setText(++questionCounter +"");
+                    if(totalAnsweredQuestions<10){
+                        //get a new question
+                        loadNewQuestion(++currentQuestion);
+                        break;
+                    }else{
+                        QuizFragmentDirections.ActionQuizFragmentToResultFragment action = QuizFragmentDirections.actionQuizFragmentToResultFragment();
+                        action.setCorrectAnswer(correctAnswer);
+                        action.setMissedQuestion(missedQuestions);
+                        action.setWrongAnswer(wrongAnswer);
+                        navController.navigate(action);
+                    }
+
             }
+        }
+
+
+        private void loadNewQuestion(int i) {
+            LoadQuestion(i);
+            //Clear every thing to start again
+            resetAllUI();
+        }
+        private void LoadQuestion(int questionNumber) {
+
+            //UnEnabling the title and cancel img
+            quizPageTitle.setVisibility(View.INVISIBLE);
+            quizCloseTabImg.setVisibility(View.INVISIBLE);
+
+            //Load options
+            option_1_BTN.setText(aQuestionToAnswer.get(questionNumber).getOption_a());
+            option_2_BTN.setText(aQuestionToAnswer.get(questionNumber ).getOption_b());
+            option_3_BTN.setText(aQuestionToAnswer.get(questionNumber ).getOption_c());
+
+            //Load question text
+            quizFetchingDataTV.setText(aQuestionToAnswer.get(questionNumber).getQuestion());
+
+            //start question timer
+            startTimer(questionNumber);
+            questionNum = questionNumber ;
+
+        }
+
+        private void resetAllUI() {
+            countDownTimer.start();
+            nextQuestionBTN.setVisibility(View.INVISIBLE);
+            nextQuestionBTN.setEnabled(false);
+            quizVerifiedAnswerTV.setVisibility(View.INVISIBLE);
+            option_1_BTN.setBackground(ContextCompat.getDrawable(getContext() ,R.drawable.outline_light_bg_btn));
+            option_2_BTN.setBackground(ContextCompat.getDrawable(getContext() ,R.drawable.outline_light_bg_btn));
+            option_3_BTN.setBackground(ContextCompat.getDrawable(getContext() ,R.drawable.outline_light_bg_btn));
+
         }
 
         private void checkTheAnswer(CharSequence btnText, View v) {
             if(enableToAnswer){
                 if(aQuestionToAnswer.get(questionNum).getAnswer().equals(btnText)){
+
+                    //Action after answering
+                    answerResult("Correct Answer");
                     v.setBackground(ContextCompat.getDrawable(getContext() ,R.drawable.outline_correct_answer_bg_btn));
-                    enableToAnswer = false;
+                    quizVerifiedAnswerTV.setTextColor(getResources().getColor(R.color.colorPrimary , null));
+
+                    correctAnswer ++;
                 }else{
+
+                    //action after answer
+                    answerResult("Answer wrong ! " + "\n the correct is: " + aQuestionToAnswer.get(questionNum).getAnswer());
                     v.setBackground(ContextCompat.getDrawable(getContext() ,R.drawable.outline_wronge_answer_bg_btn));
-                    enableToAnswer = false;
+                    quizVerifiedAnswerTV.setTextColor(getResources().getColor(R.color.colorAccent , null));
+
+                    wrongAnswer ++;
                 }
+                totalAnsweredQuestions ++;
+                countDownTimer.cancel();
+                enableToAnswer = false;
+
             }
+        }
+
+
+        private void answerResult(String answer_status) {
+            nextQuestionBTN.setVisibility(View.VISIBLE);
+            nextQuestionBTN.setEnabled(true);
+            quizVerifiedAnswerTV.setVisibility(View.VISIBLE);
+            quizVerifiedAnswerTV.setText(answer_status);
         }
     }

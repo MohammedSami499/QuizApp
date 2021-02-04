@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +44,7 @@ public class StartFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        startProgressBar = view.findViewById(R.id.progressBar);
+        startProgressBar = view.findViewById(R.id.resultProgressBar);
         startFeedBackText = view.findViewById(R.id.startFeedText);
         navController = Navigation.findNavController(view);
     }

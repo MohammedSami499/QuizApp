@@ -73,5 +73,21 @@
         android:id="@+id/resultFragment"
         android:name="com.example.quizapp.ui.ResultsFragment"
         android:label="fragment_result"
-        tools:layout="@layout/fragment_results" />
+        tools:layout="@layout/fragment_results" >
+        <argument
+            android:name="correctAnswer"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="wrongAnswer"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="missedQuestion"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_resultFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+    </fragment>
 </navigation>
