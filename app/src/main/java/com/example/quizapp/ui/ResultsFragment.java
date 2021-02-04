@@ -37,7 +37,7 @@ public class ResultsFragment extends Fragment implements View.OnClickListener {
     private Button resultHomeBtn;
 
     NavController navController;
-    float percent ;
+    private int percent ;
 
     public ResultsFragment() {
         // Required empty public constructor
@@ -78,7 +78,7 @@ public class ResultsFragment extends Fragment implements View.OnClickListener {
         correctResult.setText(correctAnswer+"");
         wrongResult.setText(wrongAnswer+"");
         missedResult.setText(missedQuestion+"");
-        resultProgressBar.setVisibility(View.INVISIBLE);
+        resultProgressBar.setProgress( percent);
 
         Log.d(TAG, "onActivityCreated: " + percent);
         resultPercentage.setText(percent + "%");

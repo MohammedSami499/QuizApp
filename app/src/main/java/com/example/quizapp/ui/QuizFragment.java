@@ -112,7 +112,6 @@ import java.util.List;
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             allQuestionsList = task.getResult().toObjects(QuestionsModel.class);
-                            quizPageTitle.setText("Welcome...");
                             pickQuestion();
                             LoadUI();
                         } else {
@@ -167,7 +166,7 @@ import java.util.List;
                 }
                 @Override
                 public void onFinish() {
-                    missedQuestions ++;
+                    ++ missedQuestions;
                     enableToAnswer = false;
                     totalAnsweredQuestions ++;
                     answerResult("Not Answered ! " + "\n the correct is: " + aQuestionToAnswer.get(questionNum).getAnswer());
@@ -184,7 +183,7 @@ import java.util.List;
             option_3_BTN.setVisibility(View.VISIBLE);
 
             //Enable all option buttons
-            option_1_BTN.setEnabled(true);
+            option_1_BTN    .setEnabled(true);
             option_2_BTN.setEnabled(true);
             option_3_BTN.setEnabled(true);
 
@@ -229,18 +228,21 @@ import java.util.List;
                     break;
                 case R.id.nextQuestion_btn:
                         quizQuestionCounter.setText(++questionCounter +"");
-                    if(totalAnsweredQuestions<10){
+                    if(totalAnsweredQuestions<allQuestionsNumber){
                         //get a new question
                         loadNewQuestion(++currentQuestion);
                         break;
                     }else{
-                        QuizFragmentDirections.ActionQuizFragmentToResultFragment action = QuizFragmentDirections.actionQuizFragmentToResultFragment();
+                        nextQuestionBTN.setText("Confirm the answers");
+                        quizPageTitle.setVisibility(View.VISIBLE);
+                        quizPageTitle.setText("Quiz finished");
+                        QuizFragmentDirections.ActionQuizFragmentToResultFragment action = QuizFragmentDirections
+                                .actionQuizFragmentToResultFragment();
                         action.setCorrectAnswer(correctAnswer);
                         action.setMissedQuestion(missedQuestions);
                         action.setWrongAnswer(wrongAnswer);
                         navController.navigate(action);
                     }
-
             }
         }
 
@@ -313,5 +315,11 @@ import java.util.List;
             nextQuestionBTN.setEnabled(true);
             quizVerifiedAnswerTV.setVisibility(View.VISIBLE);
             quizVerifiedAnswerTV.setText(answer_status);
+        }
+
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            navController.navigate(R.id.action_resultFragment_to_listFragment);
         }
     }

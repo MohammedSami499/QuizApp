@@ -8,19 +8,19 @@
     android:background="@color/colorPrimaryDark"
     >
 
-            <ImageView
-                android:id="@+id/close_tab_img"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="40dp"
-                android:background="@android:color/transparent"
-                android:padding="16dp"
-                android:paddingBottom="10dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/quiz_close_btn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/close_tab_img"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent"
+        android:padding="16dp"
+        android:paddingBottom="10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/quiz_close_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/quiz_title"
@@ -43,14 +43,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="120dp"
         android:fontFamily="@font/work_sans_thin"
         android:text="Question"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/close_tab_img"
         app:layout_constraintStart_toStartOf="@+id/quiz_title"
-        app:layout_constraintTop_toBottomOf="@+id/quiz_title" />
+        app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/question_counter"
@@ -69,14 +69,14 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="120dp"
         android:indeterminate="false"
         android:progressDrawable="@drawable/quiz_progress_bar_anim"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/question_counter"
         app:layout_constraintEnd_toEndOf="@+id/quiz_title"
-        app:layout_constraintStart_toStartOf="@+id/close_tab_img"
-        app:layout_constraintTop_toBottomOf="@+id/quiz_title" />
+        app:layout_constraintStart_toEndOf="@+id/question_counter"
+        app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/question_time_to_answer"
@@ -91,21 +91,22 @@
                 app:layout_constraintStart_toStartOf="@+id/quiz_progressBar"
                 app:layout_constraintTop_toTopOf="@+id/quiz_progressBar" />
 
-            <TextView
-                android:id="@+id/fetchingData_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="24dp"
-                android:text="Fetching data..."
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/question_counter" />
+    <TextView
+        android:id="@+id/fetchingData_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/work_sans_thin"
+        android:text="Fetching data..."
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/question_counter" />
 
     <Button
         android:id="@+id/first_option"
@@ -115,7 +116,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/outline_light_bg_btn"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/work_sans_thin"
         android:padding="12dp"
         android:text="Option button"
         android:textAllCaps="false"
@@ -134,7 +135,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/outline_light_bg_btn"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/work_sans_thin"
         android:padding="12dp"
         android:text="Option button"
         android:textAllCaps="false"
@@ -153,7 +154,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/outline_light_bg_btn"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/work_sans_thin"
         android:padding="12dp"
         android:text="Option button"
         android:textAllCaps="false"
@@ -173,6 +174,7 @@
         android:layout_marginEnd="32dp"
         android:fontFamily="sans-serif"
         android:text="Verified answer"
+        android:textAlignment="center"
         android:textColor="@color/colorPrimary"
         android:textSize="15sp"
         android:visibility="invisible"

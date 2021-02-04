@@ -12,7 +12,7 @@
         android:layout_width="131dp"
         android:layout_height="58dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="35dp"
         android:fontFamily="@font/crimson_text"
         android:text="Qiuzz"
         android:textColor="@color/colorPrimary"

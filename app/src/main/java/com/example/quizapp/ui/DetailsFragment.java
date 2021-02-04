@@ -27,12 +27,11 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "DetailsFragment";
     private ImageView details_img;
-    private TextView details_title, details_dif, details_desc, details_total_questions;
+    private TextView details_title, details_dif, details_desc, details_total_questions , last_Score;
     private QuizViewModel quizViewModel;
     private int position;
     private String quiz_Id;
     private int allQuestionsNumber;
-
     private Button detailsButton;
     private NavController navController;
 
@@ -53,8 +52,9 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
         details_img = view.findViewById(R.id.details_img);
         details_title = view.findViewById(R.id.details_title);
         details_desc = view.findViewById(R.id.details_desc);
-        details_dif = view.findViewById(R.id.details_difficulty);
-        details_total_questions = view.findViewById(R.id.details_questions);
+        details_dif = view.findViewById(R.id.details_defficulty_txt);
+        last_Score =view.findViewById(R.id.details_scores_txt);
+        details_total_questions = view.findViewById(R.id.details_questions_txt);
         detailsButton = view.findViewById(R.id.details_start_btn);
         navController = Navigation.findNavController(view);
         position = DetailsFragmentArgs.fromBundle(getArguments()).getPosition();
